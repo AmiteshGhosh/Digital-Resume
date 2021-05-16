@@ -1,54 +1,184 @@
 @import url();
-
 *
 {
     margin: 0;
     padding: 0;
     font-family: sans-serif;
 }
-
 body
 {
     display: flex;
-    justify-content: center;
-    align-items: center;
     min-height: 100vh;
     flex-direction: column;
     background: #040D15;
 }
-a
+
+
+.Resume-Container
+{
+    display: flex;
+    flex-direction: column;
+    margin:0;
+    position:relative;
+    color: ivory;
+}
+p #Output
+{
+    color: beige;
+}
+/*Naigation Bar Styling*/
+.Resume-StickyNavContainer
+{
+    display: inline-block;
+    position: sticky;
+    top:0;
+    width:100%;
+    height: 5vh;
+    background-color:blanchedalmond;
+    z-index:1;
+}
+.Resume-StickyNavContainer > a
 {
     position: relative;
     display: inline-block;
-    padding: 12px 36px;
-    margin: 10px 0;
-    color: #fff;
+    padding: 10px 24px;
+    color: black;
     text-decoration: none;
     text-transform: uppercase;
-    overflow: hidden;
-    font-size: 18px;
-    letter-spacing: 2px;
-    border-radius: 40px;
-    background: linear-gradient(90deg,#016323,#123456);
+    font-size: 10px;
+    letter-spacing: 1px;
+    background:darkgray;
+    width:5vw;
+    text-align: center;
     transition: 1s;  /* For Buton transition to take place*/
 }
-a:nth-child(2)
+.Resume-StickyNavContainer > h2
 {
-    background: linear-gradient(90deg,#76519d,#5423AF);
+    position:relative;
+    display: inline-block;
+    color: cornsilk;
+    font-weight:Bold;
 }
-/* Ripple Class Styling */
-.Ripple span
+.Resume-Links
 {
-    position: absolute;
-    background: #fff;
-    transform: translate(-50%,-50%);
-    pointer-events: none;
-    border-radius: 50%;
-    animation: animate 1s linear infinite;
+    position: relative;
+    float:right;
 }
-.Ripple:hover
+svg
 {
-    letter-spacing: 6px;
+    position: relative;
+    background-color: ivory;
+    width:4vw;
+    height:4vh;
+    padding:.2vw;
+}
+
+/*Resume Content Styling*/
+div.hideResumeContent
+{
+    display: none;
+}
+
+.Resume-Heading
+{
+    display: block;
+    position:relative;
+    text-transform: uppercase;
+    text-align: center;
+    color:ivory;
+    transition: 1s;
+    padding-top:40vh;
+    font-size: 2vw;
+    height: 60vh;
+    margin:0 auto;/**/
+}
+
+.Resume-Heading > .Head-Content
+{
+    position: relative;
+    transition: .2s;
+    width: 100%;
+    padding: 15px 15px 15px 15px;
+    overflow: hidden;
+}
+.Resume-Heading > .Head-Content > p
+{
+    font-family:'Sofia';
+    text-align: right;
+    font-size: 1vw;
+}
+.Resume-Heading > .Head-Content:hover
+{
+    color:ivory;
+    background: #2196f3;
+    box-shadow: 0 0 10px #2196f3 , 0 0 20px #2196f3 , 0 0 40px #2196f3;
+    letter-spacing: 2px;
+    padding: 3vh 2vw 3vh 2vw;
+    transition-delay:1s;
+}
+.Head-Content > span
+{
+    position:absolute;
+    display: block;
+    
+}
+.Head-Content > span:nth-child(1)
+{
+    top:0;
+    left:-100%;
+    width:100%;
+    height: 2px;
+    background: linear-gradient(90Deg,Transparent,#2196f3);
+}
+.Head-Content:hover > span:nth-child(1)
+{
+    left:100%;
+    transition: 1s;
+}
+
+.Head-Content > span:nth-child(2)
+{
+    right:0;
+    top:-100%;
+    height:100%;
+    width: 2px;
+    background: linear-gradient(180Deg,Transparent,#2196f3);
+}
+.Head-Content:hover > span:nth-child(2)
+{
+    top:100%;
+    transition: 1s;
+    transition-delay: .25s;
+}
+
+.Head-Content > span:nth-child(3)
+{
+    bottom:0;
+    right:-100%;
+    width:100%;
+    height: 2px;
+    background: linear-gradient(270Deg,Transparent,#2196f3);
+}
+.Head-Content:hover > span:nth-child(3)
+{
+    right:100%;
+    transition: 1s;  
+    transition-delay: .5s;
+}
+
+.Head-Content > span:nth-child(4)
+{
+    left:0;
+    bottom:-100%;
+    height:100%;
+    width: 2px;
+    background: linear-gradient(0Deg,Transparent,#2196f3);
+}
+.Head-Content:hover > span:nth-child(4)
+{
+    bottom:100%;
+    transition: 1s;
+    transition-delay: .75s;
 }
 
 @keyframes animate
@@ -66,20 +196,38 @@ a:nth-child(2)
         opacity: 0;
     }
 }
-.SnakeBorder
+
+ul
 {
-    position: relative;
-    display: inline-block;
-    padding: 12px 36px;
-    margin: 10px 0;
-    color: #fff;
-    text-decoration: none;
-    text-transform: uppercase;
-    font-size: 18px;
-    letter-spacing: 2px;
-    transition: 1s;  /* For Buton transition to take place*/
+    color:lightseagreen;
+    padding-left: 5vw;
 }
-.SnakeBorder:hover
+li
 {
-    letter-spacing: 6px;
+    margin:5px 0px 5px 0px;
+    transition: .4s;
+}
+li:hover
+{
+    background-color: mintcream;
+    color: black;
+    font-size: 20px;
+    font-style: bold;
+    letter-spacing: 1px;
+}
+.Resume-Section-Heads
+{
+    color:linen;
+    padding-left: 5vw;
+    padding-bottom: 50vh;
+    display: block;
+    position:relative;
+    transition: 1s;
+    padding-top:40vh;
+    height: 60vh;
+}
+.Resume-Section-Heads p
+{
+    color: lightseagreen;
+    padding-left: 5vw;
 }
