@@ -32,3 +32,15 @@ function StickyNavigtion(header,sticky) {
     header.classList.remove("sticky");
   }
 }
+
+const angleToRadian=(angle) =>{
+  return angle*(Math.PI/180);
+}
+const radius =100;
+const diameter= radius*2;
+const circle=document.querySelector('Resume-Menu');
+circle.style.width = '${diameter}px';
+circle.style.height = '${diameter}px';
+
+const  text=circle.innerText;
+ 
