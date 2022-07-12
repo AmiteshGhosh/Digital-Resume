@@ -1,0 +1,84 @@
+#!/bin/bash
+
+checks[1]="<<<<<<< "
+checks[2]="======= "
+checks[3]="=======\r\n"
+checks[4]="=======\n"
+checks[5]=">>>>>>> "
+
+if git rev-parse --verify HEAD >/dev/null 2>&1
+then
+	against=HEAD
+else
+	# Initial commit: diff against an empty tree object
+	against=$(git hash-object -t tree /dev/null)
+fi
+
+
+element_count=${#checks[@]}
+let "element_count = $element_count + 1"
+#echo $element_count
+#first check
+ROOT_DIR="F:/VisualStudioCodes/GIT-Hooks/"
+#echo $ROOT_DIR
+LIST=$(git diff-tree --no-commit-id --name-only -r $against)
+LIST_COUNT=${#LIST[@]}
+#echo $LIST_COUNT
+for file in $LIST
+do
+echo -e "Checking...\n $file"
+    if [ "$file" == '#' ]; then
+    echo a
+        continue
+    fi
+    if [ $(echo "$file" | grep 'modified') ]; then
+        FILE_ACTION="modified"
+        echo b
+    elif [ $(echo "$file" | grep 'added') ]; then
+        FILE_ACTION="added"
+        echo c
+    else 
+        EXTENSION=$(echo "$file" | grep ".*$")
+        if [ "$EXTENSION" != "" ]; then
+            index=1
+            Err_File_Index=1
+            while [ "$index" -lt "$element_count" ]
+            do
+                #echo "Checking $FILE_ACTION file: $file [${checks[$index]}]" 
+                ERRORS=$(grep "${checks[$index]}" "$ROOT_DIR$file" >&1)
+                #echo $ROOT_DIR$file
+                if [ "$ERRORS" != "" ]; then
+                    if [ "$ERRORS_BUFFER" != "" ]; then
+                        ERRORS_BUFFER="$ERRORS_BUFFER\n$ERRORS"
+                        #echo d
+                    else
+                        ERRORS_BUFFER="$ERRORS"
+                        #echo e
+                    fi
+                    #echo "${checks[$index]} found in file: $file "
+                fi
+                let "index = $index + 1"
+            done
+        fi
+    if [ "$ERRORS_BUFFER" != "" ]; then
+                ERROR_Files[$Err_File_Index]=$file
+                let "Err_File_Index= $Err_File_Index + 1"
+                fi
+    
+    fi
+done
+if [  "$ERRORS_BUFFER" != ""  ]; then
+    echo 
+    echo "Below characters were found in try-to-commit files: "
+    echo $ERRORS_BUFFER
+    for i in "${ERROR_Files[@]}"
+    do
+    echo "$(realpath $i)"
+    done 
+    echo -e "\nCommit Restricted. \nMake necessary corrections before Commit."
+    exit 1
+else
+    echo "Its Correct."
+    echo "But Wait"
+    exit 1
+fi
