@@ -1,5 +1,7 @@
-<!--Amitesh-->
->>>>>>> 
+
+<H1>Amitesh Ghosh is Awsome.
+</H1>
+</Body>
   function hideResumeDataSections()
   { 
     var Objective=document.getElementById("Objective");

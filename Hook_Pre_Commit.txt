@@ -9,7 +9,77 @@ checks[3]="=======\r\n"
 checks[4]="=======\n"
 checks[5]=">>>>>>> "
 
-if git rev-parse --verify HEAD >/dev/null 2>&1
+if git rev-parse --verify HEAD >/dev/null 2>&1#!/bin/bash
+# Author: Amitesh Ghosh
+# Checks the files to be committed for the presence of Conflict Markers
+
+###########################################################
+LIST=$(grep -rli --exclude-dir="\.git" --exclude="*.txt" "<<<<<<< \|======= \&=======\&>>>>>>> " $(pwd))
+###########################################################
+LIST_COUNT=0
+for item in $LIST
+do
+#echo $item
+let "LIST_COUNT = $LIST_COUNT + 1"
+done
+
+if [ $LIST_COUNT > 0 ]; then
+checks[1]="<<<<<<< "
+checks[2]="======="
+checks[3]=">>>>>>> "
+element_count=${#checks[@]}
+let "element_count = $element_count + 1"
+
+echo -e "\nChecking...\n"
+###########################################################
+Err_File_Index=1
+echo "Files with conflict markers : $LIST_COUNT"
+for file in $LIST
+do
+    if [ "$file" == '#' ]; then
+    echo a
+        continue
+    fi
+    if [ $(echo "$file" | grep 'modified') ]; then
+        FILE_ACTION="modified"
+        echo b
+    elif [ $(echo "$file" | grep 'added') ]; then
+        FILE_ACTION="added"
+        echo c
+    else 
+        EXTENSION=$(echo "$file" | grep ".*$")
+        if [ "$EXTENSION" != "" ]; then
+            index=1
+            while [ "$index" -lt "$element_count" ]
+            do 
+                ERRORS=$(grep -n "${checks[$index]}" "$file" >&1)
+                for err in $ERRORS 
+                do 
+                if [ "$err" != "" ]; then
+                        ERRORS_BUFFER[$Err_File_Index]="${ERRORS_BUFFER[Err_File_Index]}\n\t $err"
+                fi
+                done
+                let "index = $index + 1"
+            done
+        fi
+   
+    if [ "$ERRORS" != "" ]; then
+                ERROR_Files[$Err_File_Index]=$file
+
+                echo -e "${ERROR_Files[Err_File_Index]} \n ${ERRORS_BUFFER[Err_File_Index]}"
+
+                let "Err_File_Index= $Err_File_Index + 1"
+    fi
+    fi
+done
+
+if [  "$LIST" > 0  ]; then
+    echo -e "\nCommit Restricted. \nMake necessary corrections in above files before Commit."
+    exit 1
+else
+    exit 0
+fi
+fi
 then
 	against=HEAD
 else
