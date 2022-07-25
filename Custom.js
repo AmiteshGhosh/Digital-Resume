@@ -1,4 +1,5 @@
 <!--Amitesh-->
+>>>>>>> 
   function hideResumeDataSections()
   { 
     var Objective=document.getElementById("Objective");
